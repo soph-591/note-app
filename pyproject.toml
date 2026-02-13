@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "note"
+version = "0.1.0"
+dependencies = [
+    "flask"
+]
+authors = [
+    {name = "Sophie Paul"}
+]
+maintainers = [
+    {name = "Sophie Paul"}
+]
+readme = "README.md"
+license-files = ["LICEN[CS]E*"]
+

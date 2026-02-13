@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Files{% endblock %}</h1>
+  <a class="action" href="{{ url_for('upload.upload_file') }}">Upload</a>
+{% endblock %}
+
+{% block content %}
+  {% for file in files %}
+    <article class='file'>
+      <header>
+        <div>
+	  <a href="{{ url_for('notes.render_note', id=file['id']) }}">{{ file["name"] }}</a>
+	</div>
+      </header>
+    </article>
+  {% endfor %}
+{% endblock %}
