@@ -6,7 +6,8 @@ build-backend = "hatchling.build"
 name = "note"
 version = "0.1.0"
 dependencies = [
-    "flask"
+    "flask",
+    "markdown"
 ]
 authors = [
     {name = "Sophie Paul"}
