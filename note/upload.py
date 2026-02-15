@@ -11,8 +11,8 @@ ALLOWED_EXTENSIONS = {'md'}
 bp = Blueprint('upload', __name__)
 
 def allowed_file(filename):
-    extension = filename.rsplit('.', 1)[1].lower()
-    return '.' in filename and extension in ALLOWED_EXTENSIONS
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @bp.route('/upload', methods=['GET', 'POST'])
 def upload_file():
