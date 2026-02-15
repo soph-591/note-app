@@ -29,5 +29,5 @@ def render_note(id):
         abort(404)
     uuid, name = result
     doc = load_upload(uuid, name)
-    html = JustHTML(markdown(doc), fragment=True)
+    html = JustHTML(markdown(doc), fragment=True).to_html()
     return html
