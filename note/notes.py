@@ -1,7 +1,8 @@
-from flask import Blueprint, flash, current_app, render_template
-from note.db import get_db
-
+from flask import Blueprint, flash, render_template, abort
 from markdown import markdown
+
+from note.db import get_db
+from note.storage import load_upload
 
 bp = Blueprint('notes', __name__)
 
@@ -24,20 +25,8 @@ def render_note(id):
             ' WHERE id == ?', (id,)
             ).fetchone()
     uuid, name = result
-    upload_folder = current_app.config['UPLOAD_FOLDER']
-    with open(f"{upload_folder}/{uuid}_{name}", "r") as f:
-        md = f.read()
-        return markdown(md)
-
-#@bp.route('/notes/<int:id>/check', methods=['GET', 'POST'])
-#def check(id):
-#    db = get_db()
-#    result = db.execute(
-#            'SELECT uuid, name'
-#            ' FROM file'
-#            ' WHERE id == ?', (id,)
-#            ).fetchone()
-#    uuid, name = result
-#    upload_folder = current_app.config['UPLOAD_FOLDER']
-#    with open(f"{upload_folder}/{uuid}_{name}", "r") as f:
-#        md = f.read()
+    if result is None:
+        abort(404)
+    md = load_upload(uuid, name)
+    html = markdown(md, extensions=["extra", "sane_lists"])
+    return render_template("note.html", content=html)

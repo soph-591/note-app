@@ -1,9 +1,10 @@
 import os
 from uuid import uuid4
-from flask import Blueprint, request, flash, redirect, current_app, render_template
+from flask import Blueprint, request, flash, redirect, render_template
 from werkzeug.utils import secure_filename
 
 from note.db import get_db
+from note.storage import save_upload
 
 ALLOWED_EXTENSIONS = {'md'}
 
@@ -27,7 +28,7 @@ def upload_file():
             safe_name = secure_filename(file.filename)
             uuid = uuid4()
             unique_filename = f"{uuid}_{safe_name}"
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename))
+            save_upload(file, uuid, unique_filename)
             db = get_db()
             db.execute(
                 'INSERT INTO file (uuid,name)'
