@@ -7,7 +7,8 @@ name = "note"
 version = "0.1.0"
 dependencies = [
     "flask",
-    "markdown"
+    "markdown",
+    "justhtml"
 ]
 authors = [
     {name = "Sophie Paul"}
