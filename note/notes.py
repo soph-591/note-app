@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, render_template, abort
 from markdown import markdown
+from justhtml import JustHTML
 
 from note.db import get_db
 from note.storage import load_upload
@@ -24,9 +25,9 @@ def render_note(id):
             ' FROM file'
             ' WHERE id == ?', (id,)
             ).fetchone()
-    uuid, name = result
     if result is None:
         abort(404)
-    md = load_upload(uuid, name)
-    html = markdown(md, extensions=["extra", "sane_lists"])
-    return render_template("note.html", content=html)
+    uuid, name = result
+    doc = load_upload(uuid, name)
+    html = JustHTML(markdown(doc), fragment=True)
+    return html
