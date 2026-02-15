@@ -27,8 +27,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             safe_name = secure_filename(file.filename)
             uuid = uuid4()
-            unique_filename = f"{uuid}_{safe_name}"
-            save_upload(file, uuid, unique_filename)
+            save_upload(file, uuid, safe_name)
             db = get_db()
             db.execute(
                 'INSERT INTO file (uuid,name)'
